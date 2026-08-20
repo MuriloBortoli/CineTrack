@@ -6,32 +6,90 @@
     <title>CineTrack</title>
 </head>
 <body>
-    <h1>CineTrack</h1>
-    <p>CineTrack é seu gerenciador pessoal de filmes: registre o que já viu, o que está vendo e o que quer ver.</p>
-    <h2>Status possíveis</h2>
-    <ul>
-        <li>Assistido</li>
-        <li>Assistindo</li>
-        <li>Quero assitir</li>
-
-    </ul>
-    <h2>Meus filmes favoritos</h2>
-    <ol>
-        <li>A Origem</li>
-        <li>Interestelar</li>
-        <li>Parasita</li>
-    </ol>
-    <h2>Sobre A Origem</h2>
-    <dl>
-        <dt>Diretor</dt>
-        <dd>Cristopher Nolan</dd>
-        <dt>Ano</dt>
-        <dd>2010</dd>
-        <dt>Gênero</dt>
-        <dd>Ficção Científica</dd>
-    </dl>
-    <a href="adicionar.html">Adicionar filme</a>
-    <p>&copy; 2025 Cinetrack</p>
-
+    <header>
+        <h1>CineTrack</h1>
+        <input type="text" name="busca" id="busca" aria-label="Buscar filme">
+        <button>+ Adicionar</button>
+    </header>
+    <nav aria-label="Filtros de status">
+        <button class="ativo">Todos</button>
+        <button class="ativo">Assistidos</button>
+        <button class="ativo">Quero assistir</button>
+    </nav>
+    <main>
+        <section id="lista" aria-live="polite">
+            <article class="card">
+                <img src="poster/A_Origem_150.jpg" alt="Poster A origem">
+                <h2>A origem</h2>
+                <p>2010 - Ficção científica</p>
+                <p>Nota: &starf; &starf; &starf; &starf; &starf;</p>
+                <p>
+                    assistido 
+                    <button>Editar</button>
+                    <button>Remover</button>
+                </p>
+            </article>
+            <article class="card">
+                <img src="poster/Parasita_150.webp" alt="Poster Parasita">
+                <h2>Parasita</h2>
+                <p>2019 - Suspense</p>
+                <p>Nota: &starf; &starf; &starf; &starf; &star;</p>
+                <p>
+                    assistido
+                    <button>Editar</button>
+                    <button>Remover</button>
+                </p>
+            </article>
+            <article class="card">
+                <img src="poster/Auto_da_Compadecida_150.webp" alt="Poster O Auto da Compadecida">
+                <h2>O Auto da Compadecida</h2>
+                <p>2000 - Comédia</p>
+                <p>Nota: &starf; &starf; &starf; &starf; &starf;</p>
+                <p>
+                    assistido
+                     <button>Editar</button>
+                     <button>Remover</button>
+                </p>
+            </article>
+            <article class="card">
+                <img src="poster/Duna_parteDois_150.webp" alt="Poster Duna Parte Dois">
+                <h2>Duna: Parte Dois</h2>
+                <p>2024 - Ficção científica</p>
+                <p>Nota: &starf; &starf; &starf; &starf; &star;</p>
+                <p>
+                    assistindo 
+                    <button>Editar</button>
+                    <button>Remover</button>
+                </p>
+            </article>
+            <article class="card">
+                <img src="poster/Interestelar_150.webp" alt="Poster Interestelar">
+                <h2>A origem</h2>
+                <p>2014 - Ficção científica</p>
+                <p>Nota: &starf; &starf; &starf; &starf; &starf;</p>
+                <p>
+                    quero assistir 
+                    <button>Editar</button>
+                    <button>Remover</button>
+                </p>
+            </article>
+            <article class="card">
+                <img src="poster/CIdade_de_Deus_150.webp" alt="Poster Cidade de Deus">
+                <h2>A origem</h2>
+                <p>2010 - Ficção científica</p>
+                <p>Nota: &starf; &starf; &starf; &starf; &starf;</p>
+                <p>
+                    quero assistir 
+                    <button>Editar</button>
+                    <button>Remover</button>
+                    <br>
+                    <small>CineTrack - UEM</small>
+                </p>
+            </article>
+        </section>
+        <footer>
+            <a href="adicionar.html">Adicionar filme</a>
+        </footer>
+    </main>
 </body>
 </html>
