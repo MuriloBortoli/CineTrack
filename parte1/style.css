@@ -1,21 +1,74 @@
+/* 
+   Cores do projeto:
+   Verde escuro: #1E5C34
+   Verde claro:  #CADE91
+   Verde botão:  #73E2A7
+*/ 
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     color: black;
-    background-color: DAD2D8;
+    background-color: #E9EED3;
     line-height: 1.5;
 }
 
 header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
     background-color: #1E5C34;
     color: white;
     padding: 10px;
     border-radius: 2px;
 }
 
-.card{
+#busca {
+    width: 600px;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    width: 200px;
+    margin: 8px;
     background-color: #CADE91;
     padding: 15px;
     border-radius: 8px;
     border: 1px solid #ddd;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.289);
+}
+
+nav {
+    display: flex;
+    gap: 30px;  
+    justify-content: center;
+}
+
+nav button.ativo {
+    background: #1E5C34;
+    color: white;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+#lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.acoes {
+    margin-top: auto;
 }
