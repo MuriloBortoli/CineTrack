@@ -1,7 +1,8 @@
 /* 
    Cores do projeto:
    Verde escuro: #1E5C34
-   Verde claro:  #CADE91
+   Verde claro card:  #8CAD34
+   Verde fundo  : #D3DDA7
    Verde botão:  #73E2A7
 */ 
 
@@ -12,11 +13,23 @@
     box-sizing: border-box;
 }
 
+:root {
+    --cor-header: #1E5C34; --cor-card: #8CAD34; --cor-fundo: #D3DDA7;
+    --cor-texto: black; --altura-linha: 1.5; --cor-borda-card: #ddd;
+}
+
+@media (prefers-color-scheme: dark){
+    :root {
+        --cor-fundo: rgb(21, 21, 21); --cor-texto: white; --cor-card: #131312;
+        --cor-borda-card: black;
+    }
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
-    color: black;
-    background-color: #E9EED3;
-    line-height: 1.5;
+    color: var(--cor-texto);
+    background-color: var(--cor-fundo);
+    line-height: var(--altura-linha);
 }
 
 header {
@@ -25,7 +38,7 @@ header {
     justify-content: space-between;
     gap: 16px;
     flex-wrap: wrap;
-    background-color: #1E5C34;
+    background-color: var(--cor-header);
     color: white;
     padding: 10px;
     border-radius: 2px;
@@ -48,12 +61,12 @@ header input {flex: 1 1 240px}
 .card {
     display: flex;
     flex-direction: column;
-    gap: 1px;
+    gap: 12px;
     margin: 8px;
-    background-color: #CADE91;
-    padding: 15px;
+    background-color: var(--cor-card);
+    padding: 12px;
     border-radius: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--cor-borda-card);
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.289);
 }
 
@@ -66,13 +79,14 @@ header input {flex: 1 1 240px}
 nav {
     display: flex;
     align-items: center;  
-    justify-content: space-between;
+    justify-content: flex-start;
     gap: 8px;
     flex-wrap: wrap;
     padding: 10px;
+    
 }
 
-nav button.ativo {
+nav button {
     background: white;
     color: #1E5C34;
     border-radius: 15px;
@@ -80,15 +94,29 @@ nav button.ativo {
     border: 1px solid #268759;
 }
 
-#lista {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    flex-wrap: wrap;
-    gap: 10px;
+nav button.ativo {
+    background-color: #1E5C34;
+    color: #ddd;
+
 }
 
+#lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    flex-wrap: wrap;
+    gap: 8px;
+}
 .acoes {
-    margin-top: auto;
+    gap: 8px;
+    display: flex;
+}
+.acoes button {
+    flex: 1;
+    color: green;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid ;
+    
 }
 
 #adicionar {
@@ -125,3 +153,85 @@ h1 {
         display: inline;
     }
 };
+
+
+
+
+.badge {
+    padding: 4px 10px;
+    border-radius: 10px;
+}
+
+.assistido {
+    padding: 4px 10px;
+    border-radius: 10px;
+    color: #247342;
+    background-color: #aaf2b2;
+    width: 80px;
+}
+
+.assistindo {
+    color: #785A16;
+    padding: 4px 10px;
+    border-radius: 10px;
+    background-color: #FFE49A;
+    width: 87px;
+}
+
+.quero {
+    color: #174B7A;
+    padding: 4px 10px;
+    border-radius: 10px;
+    background-color: #C6DFFF;
+    width: 120px;
+}
+button {
+    transition: background 200ms ease, transform 150ms;;
+}
+
+button:hover {
+    background: var(--cor-header);
+    color: white;
+}
+
+button:focus-visible {
+    outline: 3px solid #667E26;
+    outline-offset: 2px;
+}
+
+
+#form-filme input {
+    padding: 6px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+#form-filme button {
+    width: 80px;
+    margin-top: 10px;
+    padding: 6px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+#form-filme select {
+    padding: 6px;
+    border-radius: 10px;
+}
+
+.modal-conteudo {
+    background-color: rgb(0, 0, 0);
+    padding: 2rem;
+    width: 100%;
+    max-width: 420px;
+    max-height: 90vh;
+    overflow: auto;
+    position: fixed;
+    inset: 0;
+    animation: aparecer 200ms ease;
+}
+
+@keyframes aparecer {
+    from { opacity: 0;
+    transform: translate(0);}
+}

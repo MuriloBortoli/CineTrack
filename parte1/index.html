@@ -12,96 +12,88 @@
         <input type="text" name="busca" id="busca" aria-label="Buscar filme" placeholder="Buscar filme">
         <button style="background-color: #73E2A7;" id="adicionar">
             <span class="mobile">+</span>
-            <span class="desktop">+ Adicionar</span>
+            <span class="desktop">+ Adicionar   </span>
         </button>  
     </header>
     <nav aria-label="Filtros de status">
         <button class="ativo">Todos</button>
-        <button class="ativo">Assistido</button>
-        <button class="ativo">Assistindo</button>
-        <button class="ativo">Quero assistir</button>
+        <button>Assistido</button>
+        <button>Assistindo</button>
+        <button>Quero assistir</button>
     </nav>
     <main>
         <section id="lista" aria-live="polite">
             <article class="card">
-                <img src="poster/A_Origem_150.jpg" alt="Poster A origem">
+                <img src="poster/A_Origem_400.png" alt="Poster A origem">
                 <h2>A origem</h2>
                 <p>2010 - Ficção científica</p>
                 <p>Nota: &starf; &starf; &starf; &starf; &starf;</p>
-                <p>
-                    assistido 
-                    <div class="acoes">
-                        <button>Editar</button>
-                        <button>Remover</button>
-                    </div>
-                </p>
+                <p class="badge assistido">assistido</p> 
+                <div class="acoes">
+                    <button>Editar</button>
+                    <button>Remover</button>
+                </div>
+                
             </article>
             <article class="card">
-                <img src="poster/Parasita_150.webp" alt="Poster Parasita">
+                <img src="poster/Parasita_400.webp" alt="Poster Parasita">
                 <h2>Parasita</h2>
                 <p>2019 - Suspense</p>
                 <p>Nota: &starf; &starf; &starf; &starf; &star;</p>
-                <p>
-                    assistido
-                    <div class="acoes">
-                        <button>Editar</button>
-                        <button>Remover</button>
-                    </div>
-                </p>
+                <p class="badge assistido">assistido</p>
+                <div class="acoes">
+                    <button>Editar</button>
+                    <button>Remover</button>
+                </div>
+                
             </article>
             <article class="card">
-                <img src="poster/Auto_da_Compadecida_150.webp" alt="Poster O Auto da Compadecida">
+                <img src="poster/Auto_da_Compadecida_400.webp" alt="Poster O Auto da Compadecida">
                 <h2>O Auto da Compadecida</h2>
                 <p>2000 - Comédia</p>
                 <p>Nota: &starf; &starf; &starf; &starf; &starf;</p>
-                <p>
-                    assistido
-                     <div class="acoes">
-                        <button>Editar</button>
-                        <button>Remover</button>
-                    </div>
-                </p>
+                <p class="badge assistido">assistido</p>
+                <div class="acoes">
+                <button>Editar</button>
+                <button>Remover</button>
+                </div>
+                
             </article>
             <article class="card">
-                <img src="poster/Duna_parteDois_150.webp" alt="Poster Duna Parte Dois">
+                <img src="poster/Duna_parteDois_400.webp" alt="Poster Duna Parte Dois">
                 <h2>Duna: Parte Dois</h2>
                 <p>2024 - Ficção científica</p>
                 <p>Nota: &starf; &starf; &starf; &starf; &star;</p>
-                <p>
-                    assistindo 
-                    <div class="acoes">
-                        <button>Editar</button>
-                        <button>Remover</button>
-                    </div>
-                </p>
+                <p class="badge assistindo">assistindo</p> 
+                <div class="acoes">
+                    <button>Editar</button>
+                    <button>Remover</button>
+                </div>
+                
             </article>
             <article class="card">
-                <img src="poster/Interestelar_150.webp" alt="Poster Interestelar">
+                <img src="poster/Interestelar_400.webp" alt="Poster Interestelar">
                 <h2>A origem</h2>
                 <p>2014 - Ficção científica</p>
                 <p>Nota: &starf; &starf; &starf; &starf; &starf;</p>
-                <p>
-                    quero assistir 
+                <p class="badge quero">quero assistir</p> 
 
-                    <div class="acoes">
-                        <button>Editar</button>
-                        <button>Remover</button>
-                    </div>
-                </p>
+                <div class="acoes">
+                    <button>Editar</button>
+                    <button>Remover</button>
+                </div>
+                
             </article>
             <article class="card">
-                <img src="poster/CIdade_de_Deus_150.webp" alt="Poster Cidade de Deus">
+                <img src="poster/CIdade_de_Deus_400.webp" alt="Poster Cidade de Deus">
                 <h2>Cidade de Deus</h2>
                 <p>2010 - Ficção científica</p>
                 <p>Nota: &starf; &starf; &starf; &starf; &starf;</p>
-                <p>
-                    quero assistir 
-                    <div class="acoes">
-                        <button>Editar</button>
-                        <button>Remover</button>
-                    </div>
-                    <br>
-                </p>
+                <p class="badge quero">quero assistir</p> 
+                <div class="acoes">
+                    <button>Editar</button>
+                    <button>Remover</button>
+                </div>
             </article>
         </section>
         <footer>
@@ -110,5 +102,46 @@
             <a href="adicionar.html">Adicionar filme</a>
         </footer>
     </main>
+
+    <div id="modal" hidden>
+        <div class="modal-conteudo">
+            <form action="" id="form-filme">
+                    <label for="titulo">Título</label><br>
+                    <input type="text" name="titulo" id="titulo" required>
+                    <br>
+                    <label for="ano">Ano</label>
+                    <br>
+                    <input type="number" name="ano" id="ano" min="1888" max="2030" required>
+                    <br>
+                    <label for="genero">Gênero</label>
+                    <br>
+                    <input type="text" name="genero" id="genero" required>
+                    <br>
+                    <label for="url">URL do pôster</label>
+                    <br>
+                    <input type="text" name="url" id="url">
+                    <br>
+                    <label for="status">Status</label>
+                    <br>
+                    <select name="status" id="status" required>
+                        <option value="assistir">Quero assistir</option>
+                        <option value="assistindo">Estou assistindo</option>
+                        <option value="assistido">Já assisti</option>
+                    </select>
+                    <br>
+                    <label for="nota">Nota(1 a 5)</label><br>
+                    <input type="number" name="nota" id="nota" min="1" max="5">
+                    <br>
+                    <label for="comentario">Comentário</label>
+                    <br>
+
+                    <input type="text" name="comentario" id="comentario">
+                    <br>
+
+                    <button type="button">Cancelar</button>
+                    <button type="submit">Salvar</button>    
+                </form>
+        </div>
+    </div>
 </body>
 </html>
