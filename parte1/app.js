@@ -22,7 +22,19 @@ const filmesIniciais = [
   { id: 6, titulo: 'Cidade de Deus', ano: 2010, genero: 'Drama e Crime', poster: 'poster/CIdade_de_Deus_400.webp', nota: 5, status: 'assistido', comentario: '' }
 ];
 
-let filmes = [...filmesIniciais];
+
+const CHAVE = 'cinetrack:filmes';
+
+const salvar = () => localStorage.setItem(CHAVE, JSON.stringify(filmes));
+
+function carregar() {
+  const txt = localStorage.getItem(CHAVE);
+  return txt ? JSON.parse(txt) : [...filmesIniciais];
+}
+
+let filmes = carregar();
+let termoAtual = '';
+let statusAtual = 'todos';
 let editandoId = null; 
 
 const listaContainer = document.querySelector('#lista');
@@ -30,6 +42,8 @@ const modal = document.querySelector('#modal');
 const form = document.querySelector('#form-filme');
 const tituloModal = document.querySelector('#titulo-modal');
 const navFiltros = document.querySelector('nav');
+const busca = document.querySelector('#busca');
+
 
 function validarFilme(filme) {
   const erros = [];
@@ -39,6 +53,22 @@ function validarFilme(filme) {
 }
 
 const gerarId = (lista) => Math.max(0, ...lista.map((f) => f.id)) + 1;
+
+function aplicarFiltros(lista, opcoes) {
+  const termo = opcoes.termo.toLowerCase();
+  return lista
+    .filter((f) => f.titulo.toLowerCase().includes(termo))
+    .filter((f) => opcoes.status === 'todos' || f.status === opcoes.status);
+}
+
+function debounce(fn, ms = 300) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), ms);
+  };
+}
+
 
 function criarCard(f) {
   const card = document.createElement('article');
@@ -75,7 +105,6 @@ function criarCard(f) {
 
   acoes.append(btnEditar, btnRemover);
   card.append(img, titulo, info, nota, badge, acoes);
-  
   return card;
 }
 
@@ -83,12 +112,24 @@ function renderizarCards(lista) {
   const frag = document.createDocumentFragment();
   lista.forEach((f) => frag.appendChild(criarCard(f)));
   listaContainer.replaceChildren(frag); 
-  
-  document.querySelector('footer small').textContent = `CineTrack © 2026 · ${filmes.length} filmes cadastrados.`;
 }
+
+function atualizarRodape() {
+  const TOTAL = filmes.length;
+  document.querySelector('footer small').textContent =
+    `CineTrack © 2026 · ${TOTAL} filmes cadastrados.`;
+}
+
+function atualizar() {
+  const visiveis = aplicarFiltros(filmes, { termo: termoAtual, status: statusAtual });
+  renderizarCards(visiveis);
+  atualizarRodape();
+}
+
 
 const abrir = () => (modal.hidden = false);
 const fechar = () => (modal.hidden = true);
+
 
 document.querySelector('#adicionar').addEventListener('click', () => {
   editandoId = null;
@@ -97,13 +138,16 @@ document.querySelector('#adicionar').addEventListener('click', () => {
   abrir();
 });
 
+
 document.querySelector('#cancelar').addEventListener('click', fechar);
+
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && !modal.hidden) {
     fechar();
   }
 });
+
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -125,9 +169,11 @@ form.addEventListener('submit', (e) => {
     filmes = [...filmes, { id: gerarId(filmes), ...dados }];
   }
 
-  renderizarCards(filmes);
+  salvar();
+  atualizar();
   fechar();
 });
+
 
 listaContainer.addEventListener('click', (e) => {
   const botaoEditar = e.target.closest('.btn-editar');
@@ -150,14 +196,15 @@ listaContainer.addEventListener('click', (e) => {
   }
 
   const botaoRemover = e.target.closest('.btn-remover');
-  if (botaoRemover) {
-      if (!confirm('Remover este filme?')) return;
+  if (!botaoRemover) return;
+  if (!confirm('Remover este filme?')) return;
 
-      const id = Number(botaoRemover.closest('.card').dataset.id);
-      filmes = filmes.filter((f) => f.id !== id);
-      renderizarCards(filmes);
-  }
+  const id = Number(botaoRemover.closest('.card').dataset.id);
+  filmes = filmes.filter((f) => f.id !== id);
+  salvar();
+  atualizar();
 });
+
 
 navFiltros.addEventListener('click', (e) => {
   const botao = e.target.closest('button');
@@ -166,9 +213,16 @@ navFiltros.addEventListener('click', (e) => {
   navFiltros.querySelector('.ativo')?.classList.remove('ativo');
   botao.classList.add('ativo');
 
-  const status = botao.dataset.status;
-  
-  renderizarCards(filmes.filter((f) => status === 'todos' || f.status === status));
+  statusAtual = botao.dataset.status;
+  atualizar();
 });
 
-renderizarCards(filmes);
+
+const aoDigitar = (e) => {
+  termoAtual = e.target.value;
+  atualizar();
+};
+
+busca.addEventListener('input', debounce(aoDigitar, 300));
+
+atualizar();
