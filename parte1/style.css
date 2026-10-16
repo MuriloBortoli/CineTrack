@@ -1,10 +1,10 @@
-/* 
+/*
    Cores do projeto:
    Verde escuro: #1E5C34
    Verde claro card:  #8CAD34
    Verde fundo  : #D3DDA7
    Verde botão:  #73E2A7
-*/ 
+*/
 
 /* Reset */
 * {
@@ -18,7 +18,7 @@
     --cor-texto: black; --altura-linha: 1.5; --cor-borda-card: #ddd;
 }
 
-@media (prefers-color-scheme: dark){
+@media (prefers-color-scheme: dark) {
     :root {
         --cor-fundo: rgb(21, 21, 21); --cor-texto: white; --cor-card: #131312;
         --cor-borda-card: black;
@@ -32,6 +32,7 @@ body {
     line-height: var(--altura-linha);
 }
 
+/* ---------- Header ---------- */
 header {
     display: flex;
     align-items: center;
@@ -48,14 +49,82 @@ header h1 {
     flex: 0 0 auto;
 }
 
-header input {flex: 1 1 240px}
-
-
+header input {
+    flex: 1 1 240px;
+}
 
 #busca {
-    width: 1000px;
     height: 45px;
     border-radius: 5px;
+    padding: 0 10px;
+}
+
+#adicionar {
+    height: 45px;
+    padding: 7px 30px;
+    border-radius: 5px;
+    background-color: #73E2A7;
+}
+
+#adicionar:hover {
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
+}
+
+.desktop {
+    display: none;
+}
+
+h1 {
+    font-size: clamp(1.2rem, 1rem + 2.5vw, 2.5rem);
+}
+
+@media (min-width: 1024px) {
+    header {
+        gap: 30px;
+    }
+
+    h1 {
+        font-size: 2.5em;
+    }
+
+    .mobile {
+        display: none;
+    }
+
+    .desktop {
+        display: inline;
+    }
+}
+
+/* ---------- Filtros ---------- */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+nav button {
+    background: white;
+    color: #1E5C34;
+    border-radius: 15px;
+    padding: 6px 14px;
+    border: 1px solid #268759;
+}
+
+nav button.ativo {
+    background-color: #1E5C34;
+    color: #ddd;
+}
+
+/* ---------- Lista e cards ---------- */
+#lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 8px;
 }
 
 .card {
@@ -76,117 +145,44 @@ header input {flex: 1 1 240px}
     object-fit: cover;
 }
 
-nav {
-    display: flex;
-    align-items: center;  
-    justify-content: flex-start;
-    gap: 8px;
-    flex-wrap: wrap;
-    padding: 10px;
-    
-}
-
-nav button {
-    background: white;
-    color: #1E5C34;
-    border-radius: 15px;
-    padding: 6px 14px;
-    border: 1px solid #268759;
-}
-
-nav button.ativo {
-    background-color: #1E5C34;
-    color: #ddd;
-
-}
-
-#lista {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    flex-wrap: wrap;
-    gap: 8px;
-}
 .acoes {
     gap: 8px;
     display: flex;
 }
+
 .acoes button {
     flex: 1;
     color: green;
     padding: 10px;
     border-radius: 5px;
-    border: 2px solid ;
-    
+    border: 2px solid currentColor;
 }
 
-#adicionar {
-    height: 45px;
-    padding: 7px 30px;
-    border-radius: 5px;
-}
-
-.desktop{
-    display: none;
-}
-
-h1 {
-    font-size: clamp(1.2rem, 1rem +2.5vw, 2.5rem);
-}
-
-
-@media (min-width: 1024px) {
-    header {
-        gap: 30px;
-
-    }
-    
-
-    h1 {
-        font-size: 2.5em;
-    }
-
-    .mobile {
-        display: none;
-    }
-    
-    .desktop {
-        display: inline;
-    }
-};
-
-
-
-
+/* ---------- Badges de status ---------- */
 .badge {
     padding: 4px 10px;
     border-radius: 10px;
+    width: fit-content;
 }
 
 .assistido {
-    padding: 4px 10px;
-    border-radius: 10px;
     color: #247342;
     background-color: #aaf2b2;
-    width: 80px;
 }
 
 .assistindo {
     color: #785A16;
-    padding: 4px 10px;
-    border-radius: 10px;
     background-color: #FFE49A;
-    width: 87px;
 }
 
 .quero {
     color: #174B7A;
-    padding: 4px 10px;
-    border-radius: 10px;
     background-color: #C6DFFF;
-    width: 120px;
 }
+
+/* ---------- Botões em geral ---------- */
 button {
-    transition: background 200ms ease, transform 150ms;;
+    transition: background 200ms ease, transform 150ms;
 }
 
 button:hover {
@@ -199,16 +195,59 @@ button:focus-visible {
     outline-offset: 2px;
 }
 
-
-#form-filme input {
-    padding: 6px;
-    border-radius: 10px;
-    border: 1px solid black;
+/* ---------- Modal ---------- */
+#modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10;
 }
 
-#form-filme button {
-    width: 80px;
-    margin-top: 10px;
+#modal[hidden] {
+    display: none;
+}
+
+.modal-conteudo {
+    background-color: var(--cor-card);
+    color: var(--cor-texto);
+    padding: 2rem;
+    width: 100%;
+    max-width: 420px;
+    max-height: 90vh;
+    overflow: auto;
+    border-radius: 12px;
+    animation: aparecer 200ms ease;
+}
+
+.modal-conteudo h2 {
+    margin-bottom: 1rem;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 0.75rem;
+}
+
+.acoes-form {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+#form-filme input {
     padding: 6px;
     border-radius: 10px;
     border: 1px solid black;
@@ -219,19 +258,10 @@ button:focus-visible {
     border-radius: 10px;
 }
 
-.modal-conteudo {
-    background-color: rgb(0, 0, 0);
-    padding: 2rem;
-    width: 100%;
-    max-width: 420px;
-    max-height: 90vh;
-    overflow: auto;
-    position: fixed;
-    inset: 0;
-    animation: aparecer 200ms ease;
-}
-
-@keyframes aparecer {
-    from { opacity: 0;
-    transform: translate(0);}
+#form-filme button {
+    width: 80px;
+    margin-top: 10px;
+    padding: 6px;
+    border-radius: 10px;
+    border: 1px solid black;
 }
