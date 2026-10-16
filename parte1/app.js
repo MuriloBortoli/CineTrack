@@ -88,9 +88,12 @@ const filmesIniciais = [
     }
 ]
 
-function renderizarCards(lista) {
+let filmes = [...filmesIniciais];
+let statusAtual = 'todos';
 
+function renderizarCards(lista) {
   const containerLista = document.querySelector('#lista');
+  
   const htmlCards = lista.map((filme) => {
     return `
       <article class="card" data-id="${filme.id}">
@@ -110,7 +113,43 @@ function renderizarCards(lista) {
   containerLista.innerHTML = htmlCards;
 }
 
-renderizarCards(filmesIniciais)
+function atualizarRodape() {
+  const TOTAL = filmes.length;
+  document.querySelector('footer small').textContent = `CineTrack © 2026 · ${TOTAL} filmes cadastrados.`;
+}
 
-const TOTAL = filmesIniciais.length;
-document.querySelector('footer small').textContent = `CineTrack © 2026 · ${TOTAL} filmes cadastrados.`;
+function atualizar() {
+  const visiveis = filmes.filter((f) => statusAtual === 'todos' || f.status === statusAtual);
+  renderizarCards(visiveis);
+  atualizarRodape();
+}
+
+const listaContainer = document.querySelector('#lista');
+
+listaContainer.addEventListener('click', (e) => {
+  const botaoRemover = e.target.closest('.btn-remover');
+  if (!botaoRemover) return;
+
+  if (!confirm('Remover este filme?')) return;
+
+  const card = botaoRemover.closest('.card');
+  const id = card.dataset.id;
+
+  filmes = filmes.filter((f) => String(f.id) !== String(id));
+  atualizar();
+});
+
+const navFiltros = document.querySelector('nav');
+
+navFiltros.addEventListener('click', (e) => {
+  const botao = e.target.closest('button');
+  if (!botao) return;
+
+  navFiltros.querySelector('.ativo')?.classList.remove('ativo');
+  botao.classList.add('ativo');
+
+  statusAtual = botao.dataset.status;
+  atualizar();
+});
+
+atualizar();
