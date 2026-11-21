@@ -1,8 +1,15 @@
-function Header() {
+// src/components/Header.jsx
+function Header({ busca, aoBuscar }) {
   return (
     <header>
       <h1>CineTrack</h1>
-      <input id="busca" aria-label="Buscar filme" placeholder="Buscar filme..." />
+      <input
+        id="busca"
+        aria-label="Buscar filme"
+        placeholder="Buscar filme..."
+        value={busca}
+        onChange={(e) => aoBuscar(e.target.value)}
+      />
       <button id="adicionar" aria-label="Adicionar filme">
         <span className="mobile" aria-hidden="true">+</span>
         <span className="desktop">+ Adicionar</span>
