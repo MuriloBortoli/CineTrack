@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 
+
 const VAZIO = {
   titulo: "",
   ano: "",
@@ -11,7 +12,7 @@ const VAZIO = {
   comentario: "",
 };
 
-function ModalFilme({ filme, aoSalvar, aoFechar }) {
+function ModalFilme({ filme, erro, aoSalvar, aoFechar }) {
   const [dados, setDados] = useState({
     ...VAZIO,
     ...filme,
@@ -116,6 +117,8 @@ function ModalFilme({ filme, aoSalvar, aoFechar }) {
               onChange={(e) => atualizar("comentario", e.target.value)}
             />
           </div>
+
+          {erro && <p className="erro" role="alert">{erro}</p>}
 
           <div className="acoes-form">
             <button type="button" onClick={aoFechar}>Cancelar</button>

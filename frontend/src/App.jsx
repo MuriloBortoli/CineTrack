@@ -1,7 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { gerarId } from "./data/filmes.js";
-import { listar } from "./api.js";
+import { listar, criar, atualizar, remover } from "./api.js";
 import Header from "./components/Header.jsx";
 import Filtros from "./components/Filtros.jsx";
 import ListaFilmes from "./components/ListaFilmes.jsx";
@@ -11,10 +10,12 @@ function App() {
   const [filmes, setFilmes] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState(null);
+
+  const [falha, setFalha] = useState(null);
   const [status, setStatus] = useState("todos");
   const [busca, setBusca] = useState("");
+  
   const [editando, setEditando] = useState(null);
-
 
   useEffect(() => {
     listar()
@@ -23,39 +24,46 @@ function App() {
       .finally(() => setCarregando(false));
   }, []);
 
+ 
   useEffect(() => {
     document.title = `CineTrack (${filmes.length})`;
   }, [filmes.length]);
 
-  function adicionar(novoFilme) {
-    setFilmes((anteriores) => [
-      ...anteriores,
-      {
-        ...novoFilme,
-        id: gerarId(anteriores),
-      },
-    ]);
+  function abrirModal(filme) {
+    setFalha(null);
+    setEditando(filme);
   }
 
-  function remover(id) {
-    if (!window.confirm("Remover este filme?")) return;
-    setFilmes((anteriores) => anteriores.filter((f) => f.id !== id));
-  }
-
-  function editar(id, alteracoes) {
-    setFilmes((anteriores) =>
-      anteriores.map((f) => (f.id === id ? { ...f, ...alteracoes } : f))
-    );
-  }
-
-  function salvar(dados) {
-    if (editando.id) {
-      editar(editando.id, dados);
-    } else {
-      adicionar(dados);
-    }
-
+  function fecharModal() {
+    setFalha(null);
     setEditando(null);
+  }
+
+
+  async function salvar(filme) {
+    try {
+      if (filme.id) {
+        const at = await atualizar(filme.id, filme);
+        setFilmes((fs) => fs.map((f) => (f.id === at.id ? at : f)));
+      } else {
+        const novo = await criar(filme);
+        setFilmes((fs) => [...fs, novo]);
+      }
+      fecharModal();
+    } catch (e) {
+      setFalha(`Não foi possível salvar: ${e.message}`);
+    }
+  }
+
+  async function removerFilme(id) {
+    if (!window.confirm("Remover este filme?")) return;
+    try {
+      await remover(id);
+      setFilmes((fs) => fs.filter((f) => f.id !== id));
+      setFalha(null);
+    } catch (e) {
+      setFalha(`Não foi possível remover: ${e.message}`);
+    }
   }
 
   const visiveis = filmes
@@ -73,8 +81,8 @@ function App() {
     conteudo = (
       <ListaFilmes
         filmes={visiveis}
-        aoEditar={setEditando}
-        aoRemover={remover}
+        aoEditar={abrirModal}
+        aoRemover={removerFilme}
       />
     );
   }
@@ -84,15 +92,21 @@ function App() {
       <Header
         busca={busca}
         aoBuscar={setBusca}
-        aoAdicionar={() => setEditando({})}
+        aoAdicionar={() => abrirModal({})}
       />
       <Filtros ativo={status} aoMudar={setStatus} />
-      <main>{conteudo}</main>
+      <main>
+        {falha && editando === null && (
+          <p className="erro" role="alert">{falha}</p>
+        )}
+        {conteudo}
+      </main>
       {editando !== null && (
         <ModalFilme
           filme={editando}
+          erro={falha}
           aoSalvar={salvar}
-          aoFechar={() => setEditando(null)}
+          aoFechar={fecharModal}
         />
       )}
     </>
